@@ -103,9 +103,9 @@ static char EMSG[] = "";
 #endif
 
 static int getopt_internal(int, char * const *, const char *,
-			   const struct goption *, int *, int);
+			   const struct option *, int *, int);
 static int parse_long_options(char * const *, const char *,
-			      const struct goption *, int *, int, int);
+			      const struct option *, int *, int, int);
 static int gcd(int, int);
 static void permute_args(int, int, int, char * const *);
 
@@ -195,7 +195,7 @@ permute_args(int panonopt_start, int panonopt_end, int opt_end,
  */
 static int
 parse_long_options(char * const *nargv, const char *options,
-	const struct goption *long_options, int *idx, int short_too, int flags)
+	const struct option *long_options, int *idx, int short_too, int flags)
 {
 	char *current_argv, *has_equal;
 #ifdef GNU_COMPATIBLE
@@ -360,7 +360,7 @@ parse_long_options(char * const *nargv, const char *options,
  */
 static int
 getopt_internal(int nargc, char * const *nargv, const char *options,
-	const struct goption *long_options, int *idx, int flags)
+	const struct option *long_options, int *idx, int flags)
 {
 	char *oli;				/* option letter list index */
 	int optchar, short_too;
@@ -598,7 +598,7 @@ getopt(int nargc, char * const *nargv, const char *options)
  */
 int
 getopt_long(int nargc, char * const *nargv, const char *options,
-	const struct goption *long_options, int *idx)
+	const struct option *long_options, int *idx)
 {
 
 	return (getopt_internal(nargc, nargv, options, long_options, idx,
@@ -611,7 +611,7 @@ getopt_long(int nargc, char * const *nargv, const char *options,
  */
 int
 getopt_long_only(int nargc, char * const *nargv, const char *options,
-	const struct goption *long_options, int *idx)
+	const struct option *long_options, int *idx)
 {
 
 	return (getopt_internal(nargc, nargv, options, long_options, idx,

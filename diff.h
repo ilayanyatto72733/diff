@@ -1,6 +1,6 @@
+/*	$OpenBSD: diff.h,v 1.34 2020/11/01 18:16:08 jcs Exp $	*/
 
-
-/*ROR
+/*-
  * Copyright (c) 1991, 1993
  *	The Regents of the University of California.  All rights reserved.
  *
@@ -27,19 +27,12 @@
  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
- *
- *	@(#)diff.h	8.1 (Berkeley) 6/6/93
- * $FreeBSD$
  */
 
-#ifndef _DIFF_H_
-#define _DIFF_H_
-
-#include<vector>
-#include<string>
-
 #include <sys/types.h>
-//#include <regex.h>
+
+#include <stdbool.h>
+#include "regex.h" //#include <regex.h>
 
 /*
  * Output format options
@@ -58,6 +51,14 @@
 
 #define	D_UNSET		-2
 
+/*
+ * Algorithms
+ */
+
+#define D_DIFFNONE     0
+#define D_DIFFSTONE    1       /* Stone or 'old diff' algorithm */
+#define D_DIFFMYERS    2       /* Myers diff algorithm */
+#define D_DIFFPATIENCE 3       /* Patience diff algorithm */
 
 /*
  * Output flags
@@ -78,6 +79,10 @@
 #define D_IGNOREBLANKS		0x200	/* Ignore white space changes */
 #define D_STRIPCR		0x400	/* Strip trailing cr */
 #define D_SKIPBLANKLINES	0x800	/* Skip blank lines */
+#define D_MATCHLAST		0x1000	/* Display last line matching provided regex */
+
+/* Features supported by new algorithms */
+#define D_NEWALGO_FLAGS                (D_FORCEASCII | D_PROTOTYPE | D_IGNOREBLANKS)
 
 /*
  * Status values for print_status() and diffreg() return values
@@ -91,48 +96,33 @@
 #define	D_SKIPPED2	6	/* path2 was a special file */
 #define	D_ERROR		7	/* A file access error occurred */
 
+/*
+ * Color options
+ */
+#define COLORFLAG_NEVER		0
+#define COLORFLAG_AUTO		1
+#define COLORFLAG_ALWAYS	2
+
 struct excludes {
 	char *pattern;
 	struct excludes *next;
 };
 
-//struct stat stb3;
-const struct stat dstat = { 0 };
+extern bool	 lflag, Nflag, Pflag, rflag, sflag, Tflag, cflag;
+extern bool	 ignore_file_case, suppress_common, color, noderef, algorithm_set;
+extern int	 diff_format, diff_context, diff_algorithm, status;
+extern bool	 diff_algorithm_set;
+extern int	 tabsize, width;
+extern char	*start, *ifdefname, *diffargs, *label[2];
+extern char	*ignore_pats, *most_recent_pat;
+extern char	*group_format;
+extern const char	*add_code, *del_code;
+extern struct stat stb1, stb2;
+extern struct excludes *excludes_list;
+extern regex_t	 ignore_re, most_recent_re;
 
-//extern int	lflag = 0, Nflag = 0, Pflag = 0, rflag = 0, sflag = 0, Tflag = 0, cflag = 0, Wflag = 0;
-//extern int	diff_format = 0, diff_context = 0, status = 0, ignore_file_case = 0;
-//extern int	suppress_common = 0;
-//extern int	tabsize = 8, width = 130;
-//extern char* start = NULL, * ifdefname = NULL, * diffargs = NULL, * label[2] = {NULL, NULL}, * ignore_pats = NULL;
-//extern char	*group_format = NULL;
-//extern struct	stat stb1 = dstat, stb2 = dstat;
-extern int	lflag, Nflag, Pflag, rflag, sflag, Tflag, cflag, Wflag;
-extern int	diff_format, diff_context, status, ignore_file_case;
-extern int	suppress_common;
-extern int	tabsize, width;
-//extern char* start, * ifdefname, * diffargs, * label[2], * ignore_pats;
-extern char* start, * ifdefname, * label[2], * ignore_pats;
-extern char* group_format;
-extern struct	stat stb1, stb2;
-//extern struct	excludes *excludes_list;
-//extern regex_t	ignore_re;
-extern std::vector<char> diffargsv;
-extern std::vector<std::string> excludes_listv;
-
-#ifdef __cplusplus
-extern std::vector<std::string> excludes_listv;
-
-extern "C"
-{
-#endif
-	char* splice(char*, char*);
-	int		diffreg(char*, char*, int, int);
-	void	diffdir(char*, char*, int);
-	void	print_only(const char*, size_t, const char*);
-	void	print_status(int, char*, char*, const char*);
-#ifdef __cplusplus
-}
-#endif
-
-
-#endif
+int	 diffreg(char *, char *, int, int);
+int	 diffreg_new(char *, char *, int, int);
+bool	 can_libdiff(int);
+void	 diffdir(char *, char *, int);
+void	 print_status(int, char *, char *, const char *);

@@ -22,9 +22,14 @@
     <ClInclude Include="diff.h" />
     <ClInclude Include="err.h" />
     <ClInclude Include="getopt.h" />
+    <ClInclude Include="regex.h" />
+    <ClInclude Include="sys_queue.h" />
+    <ClInclude Include="sys_tree.h" />
+    <ClInclude Include="unicodelib_encodings.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="diff.cpp" />
+    <ClCompile Include="diffdir.cpp" />
     <ClCompile Include="diffreg.cpp" />
     <ClCompile Include="err.cpp" />
     <ClCompile Include="getopt_long.cpp" />
@@ -144,6 +149,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalOptions>/utf-8 /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

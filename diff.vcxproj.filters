@@ -24,6 +24,18 @@
     <ClInclude Include="getopt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="regex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sys_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sys_queue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="unicodelib_encodings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="diff.cpp">
@@ -36,6 +48,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="getopt_long.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="diffdir.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

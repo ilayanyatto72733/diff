@@ -45,7 +45,7 @@
 #define required_argument  1
 #define optional_argument  2
 
-struct goption {
+struct option {
 	/* name of long option */
 	const char *name;
 	/*
@@ -61,9 +61,9 @@ struct goption {
 
 //__BEGIN_DECLS
 int	getopt_long(int, char * const *, const char *,
-	const struct goption *, int *);
+	const struct option *, int *);
 int	getopt_long_only(int, char * const *, const char *,
-	const struct goption *, int *);
+	const struct option *, int *);
 #ifndef _GETOPT_DECLARED
 #define	_GETOPT_DECLARED
 int	 getopt(int, char * const [], const char *);
