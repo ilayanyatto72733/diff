@@ -609,14 +609,8 @@ diffit(struct dirent *dp, char *path1, size_t plen1, struct dirent *dp2,
 
 	/*
 	when dp2==nullptr strcasecmp() still compare dp2->d_name
-	compare if {false=0, true} && {-1, 0, 1} == 0 where is freebsd such code style, when caller already compared names? ai code? copy-paste?
-	                  0        && equal=0
-					            1            == 0
-                                             false
-                      0        && different=1
-					            0            == 0
-								             true, so possible crashed inside strlcpy(,nullptr->d_name), different filenames
-											          but most likely strcasecmp
+	possibly crashed inside strlcpy(,nullptr->d_name,) different filenames
+	but most likely strcasecmp
 
 	/*
 	 * If we are ignoring file case, use dent2s name here if both names are
