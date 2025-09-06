@@ -37,8 +37,10 @@ typedef uintptr_t __uintptr_t;
 #define __typeof decltype
 //#include <__msvc_int128.hpp>
 //#include <charconv>
-#include "sys_tree_c.h"
-//#include "sys_tree.h" //#include <sys/tree.h> // other https://www.geeksforgeeks.org/cpp/red-black-tree-in-cpp/
+#include "sys_tree_c.h" // contrib/libevent/WIN32-Code/tree.h  or  contrib/ntp/sntp/libevent/WIN32-Code/tree.h
+//#include "sys_tree_o.h" // newer crypto/openssh/openbsd-compat/sys-tree.h // ain't gonna miss __attribute__((__unused__)) static in msvc
+//#include "sys_tree_f.h" //#include <sys/tree.h> // newest sys/sys/tree.h
+//						// https://www.geeksforgeeks.org/cpp/red-black-tree-in-cpp/
 						// https://seneca-ictoer.github.io/data-structures-and-algorithms/K-Augmented-Data-Structures/red-black
 						// https://www.geeksforgeeks.org/dsa/introduction-to-red-black-tree/
 						// https://lh3lh3.users.sourceforge.net/udb.shtml
@@ -115,7 +117,7 @@ static struct inodetree v2 = {0};//*/
 //RB_GENERATE_STATIC(inodetree, inode, entry, inodecmp); // Error C2102 '&' requires l-value // ? decltype(inode*) fail
 RB_PROTOTYPE(inodetree, inode, entry, inodecmp); // RB_PROTOTYPE(event_tree, event, ev_timeout_node, compare);
 RB_GENERATE(inodetree, inode, entry, inodecmp);  // RB_GENERATE(event_tree, event, ev_timeout_node, compare);
-/*
+/* two last C6237 sys/sys/tree.h
 [[maybe_unused]] static struct inode* inodetree_RB_INSERT_COLOR(struct inodetree* head, struct inode* parent, struct inode* elm) {
 	struct inode* child, * child_up, * gpar;
 	child = nullptr;
@@ -526,18 +528,12 @@ diffdir(char *p1, char *p2, int flags)
 		pos = dent1 == NULL ? 1 : dent2 == NULL ? -1 :
 		    ignore_file_case ? strcasecmp(dent1->d_name, dent2->d_name) :
 		    strcmp(dent1->d_name, dent2->d_name) ;
-		// 1  when dent1==nullptr
-		// -1 when dent2==nullptr
-		// 0 when equal
-		// ??? then there logic in compare vs different filenames ???
-		// ??? because of sort f() previously ???
-
-		if (pos == 0) { // no nullptrs, equal names regardless of case
+		if (pos == 0) { // no nullptrs && equal names
 			/* file exists in both dirs, diff it */
 			diffit(dent1, path1, dirlen1, dent2, path2, dirlen2, flags);
 			dp1++;
 			dp2++;
-		} else if (pos < 0) {
+		} else if (pos < 0) { // dent2==nullptr or value of strcasecmp() strcmp()
 			if (dent1 == nullptr) // assert (never)
 				err(660, "dent1 == nullptr\n");
 			/* file only in first dir, only diff if -N */
@@ -549,7 +545,7 @@ diffdir(char *p1, char *p2, int flags)
 				status |= 1;
 			}
 			dp1++;
-		} else { // ==1, when dent1==nullptr
+		} else { // pos==1, when dent1==nullptr or value of strcasecmp() strcmp()
 			if (dent2 == nullptr) // assert (never)
 				err(661,"dent2 == nullptr\n");
 			/* file only in second dir, only diff if -N or -P */
@@ -589,12 +585,13 @@ diffit(struct dirent *dp, char *path1, size_t plen1, struct dirent *dp2,
 	if ((dp == nullptr) && (dp2 == nullptr))
 		err(662, "diffit() both dp nullptr -> no filename"); // assert never
 
+#pragma warning(disable : 6011) // dp ain't nullptr, diffdir()
 	// called with nullptr from diffdir() due fdscandir()
 	// ??? supposed to return nullptr when folder empty (numitems == 0)
 	if (dp2 == nullptr) {
-		strlcpy(path1 + plen1, dp->d_name, PATH_MAX - plen1);
+		strlcpy(path1 + plen1, dp->d_name, PATH_MAX - plen1); // no C6011
 		strlcpy(path2 + plen2, dp->d_name, PATH_MAX - plen2);
-	} else if (dp == nullptr) {
+	} else if (dp == nullptr) { // never, diffdir()
 		strlcpy(path1 + plen1, dp2->d_name, PATH_MAX - plen1);
 		strlcpy(path2 + plen2, dp2->d_name, PATH_MAX - plen2);
 	} else {
@@ -618,7 +615,8 @@ diffit(struct dirent *dp, char *path1, size_t plen1, struct dirent *dp2,
                                              false
                       0        && different=1
 					            0            == 0
-								             true, so it possible shit crashed inside strlcpy(nullptr->d_name), different filenames
+								             true, so possible crashed inside strlcpy(,nullptr->d_name), different filenames
+											          but most likely strcasecmp
 
 	/*
 	 * If we are ignoring file case, use dent2s name here if both names are
@@ -728,6 +726,7 @@ diffit(struct dirent *dp, char *path1, size_t plen1, struct dirent *dp2,
 	else
 		dp->d_status = diffreg(path1, path2, flags, 0);
 	print_status(dp->d_status, path1, path2, "");
+#pragma warning(default : 6011)
 }
 
 /*
