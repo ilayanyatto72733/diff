@@ -27,13 +27,13 @@
     <ClInclude Include="regex.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sys_tree.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="sys_queue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="unicodelib_encodings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sys_tree_c.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

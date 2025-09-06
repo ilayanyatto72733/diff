@@ -37,7 +37,8 @@ typedef uintptr_t __uintptr_t;
 #define __typeof decltype
 //#include <__msvc_int128.hpp>
 //#include <charconv>
- //#include "sys_tree.h" //#include <sys/tree.h> // other https://www.geeksforgeeks.org/cpp/red-black-tree-in-cpp/
+#include "sys_tree_c.h"
+//#include "sys_tree.h" //#include <sys/tree.h> // other https://www.geeksforgeeks.org/cpp/red-black-tree-in-cpp/
 						// https://seneca-ictoer.github.io/data-structures-and-algorithms/K-Augmented-Data-Structures/red-black
 						// https://www.geeksforgeeks.org/dsa/introduction-to-red-black-tree/
 						// https://lh3lh3.users.sourceforge.net/udb.shtml
@@ -84,10 +85,12 @@ struct inode {
 	// https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/stat-functions?view=msvc-170
 	// _open() https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/open-wopen?view=msvc-170
 
-	//RB_ENTRY(inode) entry;
+	RB_ENTRY(inode) entry;
+	/*
 	struct {
 		struct inode* rbe_link[3];
 	} entry;
+	//*/
 };
 
 static int
@@ -97,19 +100,22 @@ inodecmp(struct inode *a, struct inode *b)
 	    a->ino < b->ino ? -1 : a->ino > b->ino ? 1 : 0);
 }
 
-/*/
-struct inodetree {
-	struct inode* rbh_root; // * root of the tree * //
-};//*/
-//RB_HEAD(inodetree, inode);
-struct inodetree {
+///*/
+//struct inodetree {
+//	struct inode* rbh_root; // * root of the tree * //
+//};//*/
+RB_HEAD(inodetree, inode);
+/*struct inodetree {
 	struct inode* rbh_root;
-};
-//static struct inodetree v1 = RB_INITIALIZER(&v1);
-//static struct inodetree v2 = RB_INITIALIZER(&v2);
-static struct inodetree v1 = {0};
-static struct inodetree v2 = {0};
+};//*/
+static struct inodetree v1 = RB_INITIALIZER(&v1);
+static struct inodetree v2 = RB_INITIALIZER(&v2);
+/*static struct inodetree v1 = {0};
+static struct inodetree v2 = {0};//*/
 //RB_GENERATE_STATIC(inodetree, inode, entry, inodecmp); // Error C2102 '&' requires l-value // ? decltype(inode*) fail
+RB_PROTOTYPE(inodetree, inode, entry, inodecmp); // RB_PROTOTYPE(event_tree, event, ev_timeout_node, compare);
+RB_GENERATE(inodetree, inode, entry, inodecmp);  // RB_GENERATE(event_tree, event, ev_timeout_node, compare);
+/*
 [[maybe_unused]] static struct inode* inodetree_RB_INSERT_COLOR(struct inodetree* head, struct inode* parent, struct inode* elm) {
 	struct inode* child, * child_up, * gpar;
 	child = nullptr;
@@ -138,7 +144,8 @@ static struct inodetree v2 = {0};
 				//		RB_SET_PARENT(_RB_LINK(tmp, dir, field), elm, field);	\
 				// _RB_LINK(tmp, dir, field) = (elm);				\
 				// RB_SET_PARENT(elm, tmp, field);					\
-				// } while (/*CONSTCOND*/ 0)
+				// } while (/*CONSTCOND* / 0)
+// !
 				if (((elm)->entry.rbe_link[elmdir ^ ((uintptr_t)3)] = (child)->entry.rbe_link[elmdir]) != 0)
 					do {	// RB_SET_PARENT()
 					(*(uintptr_t*)&((child)->entry.rbe_link[elmdir])->entry.rbe_link[0]) = (uintptr_t)elm | ((*(uintptr_t*)&((child)->entry.rbe_link[elmdir])->entry.rbe_link[0]) & ((uintptr_t)3));
@@ -215,8 +222,11 @@ static struct inodetree v2 = {0};
 	do {
 		if (tmp == elm) tmp = 0;
 	//} while (0 && (elm = (decltype((elm)->entry.rbe_link[0]))((uintptr_t)(elm)->entry.rbe_link[0] & ~((uintptr_t)3))) != 0); if (tmp != 0) (void)0; return (0);
+	//} while (0 && (elm = (inode*)((uintptr_t)(elm)->entry.rbe_link[0] & ~((uintptr_t)3))) != 0); // C6237: (<zero> && <expression>) is always zero // !
 	} while (0 && (elm = (inode*)((uintptr_t)(elm)->entry.rbe_link[0] & ~((uintptr_t)3))) != 0);
-	if (tmp != 0) (void)0; return (0);
+	if (tmp != 0)
+		(void)0; // (void)RB_AUGMENT_CHECK(tmp); // !
+	return (0);
 };
 
 [[maybe_unused]] static struct inode* inodetree_RB_INSERT(struct inodetree* head, struct inode* elm) {
@@ -253,8 +263,10 @@ static struct inodetree v2 = {0};
 			opar = 0; parent = (inode*)((uintptr_t)(parent)->entry.rbe_link[0] & ~((uintptr_t)3));
 		} do {
 			if (opar == parent) opar = 0;
-		//} while (0 && (parent = (decltype((parent)->entry.rbe_link[0]))((uintptr_t)(parent)->entry.rbe_link[0] & ~((uintptr_t)3))) != 0); if (opar != 0) {
-		} while (0 && (parent = (inode*)((uintptr_t)(parent)->entry.rbe_link[0] & ~((uintptr_t)3))) != 0); if (opar != 0) {
+		//} while (0 && (parent = (decltype((parent)->entry.rbe_link[0]))((uintptr_t)(parent)->entry.rbe_link[0] & ~((uintptr_t)3))) != 0);
+		//} while (0 && (parent = (inode*)((uintptr_t)(parent)->entry.rbe_link[0] & ~((uintptr_t)3))) != 0); { // C6237: (<zero> && <expression>) is always zero // !
+		} while (0 && (parent = (inode*)((uintptr_t)(parent)->entry.rbe_link[0] & ~((uintptr_t)3))) != 0);
+		if (opar != 0) {
 			(void)0; (void)0;
 		}
 	} return (out);
@@ -327,6 +339,7 @@ static struct inodetree v2 = {0};
 		inodetree_RB_REMOVE(head, elm); return (inodetree_RB_INSERT(head, elm));
 	} return (0);
 };
+//*/
 
 static int
 vscandir(struct inodetree* tree, const char* path, struct dirent*** dirp,
@@ -383,8 +396,8 @@ vscandir(struct inodetree* tree, const char* path, struct dirent*** dirp,
 		goto fail;//*/
 	ino->dev = fi.VolumeSerialNumber;
 	ino->ino = il; // !
-	//if (RB_FIND(inodetree, tree, ino)) {
-	if (inodetree_RB_FIND(tree, ino)) {
+	if (RB_FIND(inodetree, tree, ino)) {
+	//if (inodetree_RB_FIND(tree, ino)) {
 		free(ino);
 		_close(fd);
 		warnx("%s: Directory loop detected", path);
@@ -396,9 +409,12 @@ vscandir(struct inodetree* tree, const char* path, struct dirent*** dirp,
 
 	//printf("fdscandir_end\n");
 
-	//RB_INSERT(inodetree, tree, ino);
-	inodetree_RB_INSERT(tree, ino);
-	//printf("insert\n");
+	RB_INSERT(inodetree, tree, ino);
+	//inodetree_RB_INSERT(tree, ino);
+	/*if (RB_FIND(inodetree, tree, ino)) {
+	//if (inodetree_RB_FIND(tree, ino)) {
+		printf("insert\n");
+	}//*/
 	if (fd >= 0) _close(fd);
 	//printf("_end, %d\n", ret);
 	return (ret);

@@ -24,7 +24,7 @@
     <ClInclude Include="getopt.h" />
     <ClInclude Include="regex.h" />
     <ClInclude Include="sys_queue.h" />
-    <ClInclude Include="sys_tree.h" />
+    <ClInclude Include="sys_tree_c.h" />
     <ClInclude Include="unicodelib_encodings.h" />
   </ItemGroup>
   <ItemGroup>
