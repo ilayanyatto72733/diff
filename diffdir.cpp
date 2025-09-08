@@ -29,12 +29,12 @@
 #include <time.h>
 #include <filesystem>
 #include <string.h>
-#include <sys/types.h> // https://learn.microsoft.com/en-us/cpp/c-runtime-library/reference/stat-functions?view=msvc-170
+#include <sys/types.h>
 
 #include <sys/stat.h>
-#define __unused [[maybe_unused]]
-typedef uintptr_t __uintptr_t;
-#define __typeof decltype
+//#define __unused [[maybe_unused]]
+//typedef uintptr_t __uintptr_t;
+//#define __typeof decltype
 //#include <__msvc_int128.hpp>
 //#include <charconv>
 #include "sys_tree_c.h" // contrib/libevent/WIN32-Code/tree.h  or  contrib/ntp/sntp/libevent/WIN32-Code/tree.h
@@ -67,7 +67,7 @@ static void print_only(const char *, size_t, const char *);
 
 struct inode {
 	uint64_t dev; //dev_t dev;
-	uint64_t ino; //ino_t ino; // typedef unsigned short _ino_t; // inode number (unused on Windows) // types.h
+	uint64_t ino; //ino_t ino; // typedef unsigned short _ino_t; // inode number (unused on Windows) // types.h // ino_t Windows 128 bit // !
 	// https://stackoverflow.com/questions/7162164/does-windows-have-inode-numbers-like-linux
 	// https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-file_id_info
 	// 128-bit file identifier for the file. The file identifier and the volume serial number uniquely identify a file on a single computer.

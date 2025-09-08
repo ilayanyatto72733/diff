@@ -23,6 +23,9 @@
     <ClInclude Include="err.h" />
     <ClInclude Include="getopt.h" />
     <ClInclude Include="regex.h" />
+    <ClInclude Include="regex2.h" />
+    <ClInclude Include="reg_cname.h" />
+    <ClInclude Include="reg_utils.h" />
     <ClInclude Include="sys_queue.h" />
     <ClInclude Include="sys_tree_c.h" />
     <ClInclude Include="unicodelib_encodings.h" />
@@ -33,6 +36,10 @@
     <ClCompile Include="diffreg.cpp" />
     <ClCompile Include="err.cpp" />
     <ClCompile Include="getopt_long.cpp" />
+    <ClCompile Include="regcomp.cpp" />
+    <ClCompile Include="regerror.cpp" />
+    <ClCompile Include="regexec.cpp" />
+    <ClCompile Include="regfree.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

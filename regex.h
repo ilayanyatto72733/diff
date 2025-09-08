@@ -38,17 +38,11 @@
 
 //#include <sys/cdefs.h>
 //#include <sys/_types.h>
-#include <cstddef>
-//#include <vector>
-//#include <ios>
 #define _SIZE_T_DECLARED
-//void aaa(void) {size_t;off_t;}
-//#include <sys/types.h>
-//#include <array>
 
 /* types */
-//typedef	__off_t		regoff_t;
-typedef	_off_t		regoff_t; // https://learn.microsoft.com/en-us/cpp/c-runtime-library/standard-types?view=msvc-170
+typedef	long long	__off_t; // __int64_t sys/sys/_types.h
+typedef	__off_t		regoff_t;
 
 #ifndef _SIZE_T_DECLARED
 typedef	__size_t	size_t;

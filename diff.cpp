@@ -26,15 +26,6 @@
 #include <windows.h>
 #include <locale.h>
 
-#include <vector>
-
-#define strcasecmp _stricmp
-//std::intmax_t
-// freebsd-src-main/lib/libc/regex
-//#define regex_t char const // <regex> or freebsd-src-main/lib/libc/regex TODO also TRE (Tiny Regular Expression library) https://github.com/laurikari/tre/
-
-// -cflag
-
 #include <sys/stat.h>
 
 #include <ctype.h>
@@ -422,7 +413,8 @@ main(int argc, char **argv)
 	argv += optind;
 
 	//dflags |= D_STRIPCR; // -Naur
-	if (Nflag == 1 && (dflags & D_FORCEASCII) && (diff_format & D_UNIFIED) && rflag == 1) dflags |= D_STRIPCR; // -Naur
+	//if (Nflag == 1 && (dflags & D_FORCEASCII) && (diff_format & D_UNIFIED) && rflag == 1) dflags |= D_STRIPCR; // -Naur
+	if (Nflag == 1 && (dflags & D_FORCEASCII) && (diff_format & D_UNIFIED)) dflags |= D_STRIPCR; // -Nau
 
 	if (do_color()) {
 		char *p;

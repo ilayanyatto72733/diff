@@ -12,188 +12,188 @@
  * incompatible with the protocol description in the RFC file, it must be
  * called by a name other than "ssh" or "Secure Shell".
  */
- /*-
-  * Copyright (c) 2016 Mariusz Zaborski <oshogbo@FreeBSD.org>
-  * All rights reserved.
-  *
-  * Redistribution and use in source and binary forms, with or without
-  * modification, are permitted provided that the following conditions
-  * are met:
-  * 1. Redistributions of source code must retain the above copyright
-  *    notice, this list of conditions and the following disclaimer.
-  * 2. Redistributions in binary form must reproduce the above copyright
-  *    notice, this list of conditions and the following disclaimer in the
-  *    documentation and/or other materials provided with the distribution.
-  *
-  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
-  * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-  * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
-  * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-  * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-  * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-  * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-  * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-  * SUCH DAMAGE.
-  */
-  /*-
-   * SPDX-License-Identifier: BSD-2-Clause
-   *
-   * Copyright (c) 2008-2010, 2015 Robert N. M. Watson
-   * Copyright (c) 2012 FreeBSD Foundation
-   * All rights reserved.
-   *
-   * This software was developed at the University of Cambridge Computer
-   * Laboratory with support from a grant from Google, Inc.
-   *
-   * Portions of this software were developed by Pawel Jakub Dawidek under
-   * sponsorship from the FreeBSD Foundation.
-   *
-   * Redistribution and use in source and binary forms, with or without
-   * modification, are permitted provided that the following conditions
-   * are met:
-   * 1. Redistributions of source code must retain the above copyright
-   *    notice, this list of conditions and the following disclaimer.
-   * 2. Redistributions in binary form must reproduce the above copyright
-   *    notice, this list of conditions and the following disclaimer in the
-   *    documentation and/or other materials provided with the distribution.
-   *
-   * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
-   * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-   * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
-   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-   * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-   * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-   * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-   * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-   * SUCH DAMAGE.
-   */
-   /*-
-	* SPDX-License-Identifier: BSD-2-Clause
-	*
-	* Copyright (c) 2013 FreeBSD Foundation
-	*
-	* This software was developed by Pawel Jakub Dawidek under sponsorship from
-	* the FreeBSD Foundation.
-	*
-	* Redistribution and use in source and binary forms, with or without
-	* modification, are permitted provided that the following conditions
-	* are met:
-	* 1. Redistributions of source code must retain the above copyright
-	*    notice, this list of conditions and the following disclaimer.
-	* 2. Redistributions in binary form must reproduce the above copyright
-	*    notice, this list of conditions and the following disclaimer in the
-	*    documentation and/or other materials provided with the distribution.
-	*
-	* THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
-	* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-	* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-	* ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
-	* FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-	* DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-	* OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-	* HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-	* LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-	* OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-	* SUCH DAMAGE.
-	*/
-	/* $OpenBSD: xmalloc.c,v 1.10 2019/06/28 05:44:09 deraadt Exp $ */
-	/*
-	 * Author: Tatu Ylonen <ylo@cs.hut.fi>
-	 * Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
-	 *                    All rights reserved
-	 * Versions of malloc and friends that check their results, and never return
-	 * failure (they call fatal if they encounter an error).
-	 *
-	 * As far as I am concerned, the code I have written for this software
-	 * can be used freely for any purpose.  Any derived versions of this
-	 * software must be clearly marked as such, and if the derived work is
-	 * incompatible with the protocol description in the RFC file, it must be
-	 * called by a name other than "ssh" or "Secure Shell".
-	 */
-	 /**
-	 * @file mkstemp.c
-	 * Copyright (C) 2013 MinGW.org project
-	 *
-	 * Permission is hereby granted, free of charge, to any person obtaining a
-	 * copy of this software and associated documentation files (the "Software"),
-	 * to deal in the Software without restriction, including without limitation
-	 * the rights to use, copy, modify, merge, publish, distribute, sublicense,
-	 * and/or sell copies of the Software, and to permit persons to whom the
-	 * Software is furnished to do so, subject to the following conditions:
-	 *
-	 * The above copyright notice, this permission notice, and the following
-	 * disclaimer shall be included in all copies or substantial portions of
-	 * the Software.
-	 *
-	 * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-	 * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	 * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
-	 * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	 * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-	 * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OF OR OTHER
-	 * DEALINGS IN THE SOFTWARE.
-	 */
-	 /*-
-	  * SPDX-License-Identifier: BSD-2-Clause
-	  *
-	  * Copyright (c) 2007-2014 QLogic Corporation. All rights reserved.
-	  *
-	  * Redistribution and use in source and binary forms, with or without
-	  * modification, are permitted provided that the following conditions
-	  * are met:
-	  *
-	  * 1. Redistributions of source code must retain the above copyright
-	  *    notice, this list of conditions and the following disclaimer.
-	  * 2. Redistributions in binary form must reproduce the above copyright
-	  *    notice, this list of conditions and the following disclaimer in the
-	  *    documentation and/or other materials provided with the distribution.
-	  *
-	  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS'
-	  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-	  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-	  * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
-	  * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-	  * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-	  * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-	  * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-	  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-	  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
-	  * THE POSSIBILITY OF SUCH DAMAGE.
-	  */
-	  /*-
-	   * SPDX-License-Identifier: BSD-3-Clause
-	   *
-	   * Copyright (c) 1983, 1993
-	   *	The Regents of the University of California.  All rights reserved.
-	   *
-	   * Redistribution and use in source and binary forms, with or without
-	   * modification, are permitted provided that the following conditions
-	   * are met:
-	   * 1. Redistributions of source code must retain the above copyright
-	   *    notice, this list of conditions and the following disclaimer.
-	   * 2. Redistributions in binary form must reproduce the above copyright
-	   *    notice, this list of conditions and the following disclaimer in the
-	   *    documentation and/or other materials provided with the distribution.
-	   * 3. Neither the name of the University nor the names of its contributors
-	   *    may be used to endorse or promote products derived from this software
-	   *    without specific prior written permission.
-	   *
-	   * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
-	   * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-	   * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-	   * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
-	   * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-	   * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
-	   * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-	   * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-	   * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
-	   * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
-	   * SUCH DAMAGE.
-	   */
+/*-
+ * Copyright (c) 2016 Mariusz Zaborski <oshogbo@FreeBSD.org>
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
+ * Copyright (c) 2008-2010, 2015 Robert N. M. Watson
+ * Copyright (c) 2012 FreeBSD Foundation
+ * All rights reserved.
+ *
+ * This software was developed at the University of Cambridge Computer
+ * Laboratory with support from a grant from Google, Inc.
+ *
+ * Portions of this software were developed by Pawel Jakub Dawidek under
+ * sponsorship from the FreeBSD Foundation.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
+ * Copyright (c) 2013 FreeBSD Foundation
+ *
+ * This software was developed by Pawel Jakub Dawidek under sponsorship from
+ * the FreeBSD Foundation.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
+/* $OpenBSD: xmalloc.c,v 1.10 2019/06/28 05:44:09 deraadt Exp $ */
+/*
+ * Author: Tatu Ylonen <ylo@cs.hut.fi>
+ * Copyright (c) 1995 Tatu Ylonen <ylo@cs.hut.fi>, Espoo, Finland
+ *                    All rights reserved
+ * Versions of malloc and friends that check their results, and never return
+ * failure (they call fatal if they encounter an error).
+ *
+ * As far as I am concerned, the code I have written for this software
+ * can be used freely for any purpose.  Any derived versions of this
+ * software must be clearly marked as such, and if the derived work is
+ * incompatible with the protocol description in the RFC file, it must be
+ * called by a name other than "ssh" or "Secure Shell".
+ */
+/**
+ * @file mkstemp.c
+ * Copyright (C) 2013 MinGW.org project
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a
+ * copy of this software and associated documentation files (the "Software"),
+ * to deal in the Software without restriction, including without limitation
+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
+ * and/or sell copies of the Software, and to permit persons to whom the
+ * Software is furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice, this permission notice, and the following
+ * disclaimer shall be included in all copies or substantial portions of
+ * the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+ * OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OF OR OTHER
+ * DEALINGS IN THE SOFTWARE.
+ */
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
+ * Copyright (c) 2007-2014 QLogic Corporation. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS'
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
+ * BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+ * THE POSSIBILITY OF SUCH DAMAGE.
+ */
+/*-
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * Copyright (c) 1983, 1993
+ *	The Regents of the University of California.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the University nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
 /*-
  * SPDX-License-Identifier: BSD-3-Clause
  *
@@ -242,7 +242,9 @@
 #include<vector>
 #include<string>
 #include<filesystem>
-#include <cassert> // regex
+
+#include <fcntl.h>
+#include <wincrypt.h>
 
 #include<string.h> // memcpy() memcpy_s
 
@@ -260,6 +262,10 @@
 
 //#define _CRT_SECURE_NO_WARNINGS
 //#pragma warning(disable : 4996)
+
+//typedef	long		off_t; // windows
+//typedef	long long	__off_t;	/* file offset */ // __int64_t sys/_types.h
+//typedef	__off_t		off_t; /* file offset */      // sys/types.h
 
 // getdelim(), getline() {getdelim(..., '\n');}
 ssize_t getline(char** linep, size_t* linecapp, FILE* stream) { // read_excludes_file()
@@ -622,116 +628,6 @@ int		 diffreg_new(char*, char*, int, int) {
 	return D_ERROR;
 }
 
-
-#include "regex.h"
-//#include "regex2.h"
-
-
-// freebsd-src-main/lib/libc/regex/
-
-static int	// regcomp.c
-regcomp_internal(regex_t* __restrict preg,
-				 const char* __restrict pattern,
-				 int cflags, int pflags) {
-
-	return(REG_INVARG);
-
-}
-
-
-//int	regcomp(regex_t* __restrict, const char* __restrict, int) {
-int	regcomp(regex_t * __restrict preg, const char* __restrict pattern, int cflags) {
-	return (regcomp_internal(preg, pattern, cflags, 0));
-	//return(REG_INVARG);
-}
-static struct rerr {
-	int code;
-	const char* name;
-	const char* explain;
-} rerrs[] = {
-	{REG_NOMATCH,	"REG_NOMATCH",	"regexec() failed to match"},
-	{REG_BADPAT,	"REG_BADPAT",	"invalid regular expression"},
-	{REG_ECOLLATE,	"REG_ECOLLATE",	"invalid collating element"},
-	{REG_ECTYPE,	"REG_ECTYPE",	"invalid character class"},
-	{REG_EESCAPE,	"REG_EESCAPE",	"trailing backslash (\\)"},
-	{REG_ESUBREG,	"REG_ESUBREG",	"invalid backreference number"},
-	{REG_EBRACK,	"REG_EBRACK",	"brackets ([ ]) not balanced"},
-	{REG_EPAREN,	"REG_EPAREN",	"parentheses not balanced"},
-	{REG_EBRACE,	"REG_EBRACE",	"braces not balanced"},
-	{REG_BADBR,	"REG_BADBR",	"invalid repetition count(s)"},
-	{REG_ERANGE,	"REG_ERANGE",	"invalid character range"},
-	{REG_ESPACE,	"REG_ESPACE",	"out of memory"},
-	{REG_BADRPT,	"REG_BADRPT",	"repetition-operator operand invalid"},
-	{REG_EMPTY,	"REG_EMPTY",	"empty (sub)expression"},
-	{REG_ASSERT,	"REG_ASSERT",	"\"can't happen\" -- you found a bug"},
-	{REG_INVARG,	"REG_INVARG",	"invalid argument to regex routine"},
-	{REG_ILLSEQ,	"REG_ILLSEQ",	"illegal byte sequence"},
-	{0,		"",		"*** unknown regexp error code ***"}
-};
-
-static const char* regatoi(const regex_t* preg, char* localbuf) {
-	struct rerr* r;
-
-	for (r = rerrs; r->code != 0; r++)
-		if (strcmp(r->name, preg->re_endp) == 0)
-			break;
-	if (r->code == 0)
-		return("0");
-
-#pragma warning(disable : 4996)
-	sprintf(localbuf, "%d", r->code);
-#pragma warning(default : 4996)
-	return(localbuf);
-}
-
-#include <cassert>
-size_t regerror(int errcode,
-		 const regex_t* __restrict preg,
-		 char* __restrict errbuf,
-		 size_t errbuf_size) {
-	struct rerr* r;
-	size_t len;
-	int target = errcode & ~REG_ITOA;
-	const char* s;
-	char convbuf[50];
-
-#pragma warning(disable : 4996)
-	if (errcode == REG_ATOI)
-		s = regatoi(preg, convbuf);
-	else {
-		for (r = rerrs; r->code != 0; r++)
-			if (r->code == target)
-				break;
-
-		if (errcode & REG_ITOA) {
-			if (r->code != 0)
-				(void)strcpy(convbuf, r->name);
-			else
-				sprintf(convbuf, "REG_0x%x", target);
-			assert(strlen(convbuf) < sizeof(convbuf));
-			s = convbuf;
-		} else
-			s = r->explain;
-	}
-
-	len = strlen(s) + 1;
-	if (errbuf_size > 0) {
-		if (errbuf_size > len)
-			(void)strcpy(errbuf, s);
-		else {
-			(void)strncpy(errbuf, s, errbuf_size - 1);
-			errbuf[errbuf_size - 1] = '\0';
-		}
-	}
-#pragma warning(default : 4996)
-
-	return(len);
-}
-int regexec(const regex_t* preg, const char* string, size_t nmatch, regmatch_t pmatch[], int eflags) {
-//int regexec(const regex_t* __restrict preg, const char* __restrict string, size_t nmatch, regmatch_t pmatch[__restrict], int eflags) {
-	return(REG_BADPAT);
-}
-
 /*
  * Alphabetic order comparison routine for those who want it.
  * POSIX 2008 requires that alphasort() uses strcoll().
@@ -906,14 +802,14 @@ loop:
 	}
 }
 
-void __qsort_r_compat(void* a, size_t n, size_t es, void* thunk, cmp_t* cmp) {
+static inline void __qsort_r_compat(void* a, size_t n, size_t es, void* thunk, cmp_t* cmp) {
 	local_qsort_r_compat(a, n, es, cmp, thunk); // 4<->5
 }
 //static inline void qsort_r__(void* base, size_t nmemb, size_t size,
 //						   void* thunk, int (*compar)(void*, const void*, const void*)) {
 //	__qsort_r_compat(base, nmemb, size, thunk, compar);
 //}
-//static inline
+inline
 void qsort_r(void* base, size_t nmemb, size_t size,
 							void* thunk,
 							int (*compar)(const struct dirent**, const struct dirent**)) {
@@ -967,7 +863,8 @@ _fixtelldir(DIR* dirp, off_t oldseek, size_t oldloc) {
 	}
 }
 
-ssize_t _getdirentries(int fd, _Out_writes_bytes_(count) char* buf, size_t count, _Out_opt_ off_t* basep) {
+static ssize_t _getdirentries(int fd, _Out_writes_bytes_(count) char* buf, size_t count, _Out_opt_ off_t* basep) {
+	basep = nullptr;
 	return -1;
 }
 
@@ -1099,7 +996,7 @@ scandir_dirp(DIR* dirp, struct dirent*** namelist,
 		goto fail;
 	if (numitems > 0 && dcomp != NULL) {
 		//qsort_r(names, numitems, sizeof(struct dirent*), scandir_thunk_cmp, &dcomp);
-		//qsort_r(names, numitems, sizeof(struct dirent*), scandir_thunk_cmp, dcomp);
+		qsort_r(names, numitems, sizeof(struct dirent*), scandir_thunk_cmp, dcomp);
 	}
 	*namelist = names;
 	return (numitems);
@@ -1309,7 +1206,7 @@ fdscandir(const std::wstring& in_str, struct dirent*** namelist,
 	*   names = (dirent **)malloc(arraysz * sizeof(*names));
 	*
 	*   // (dirent)readdir(DIR*)
-	*   while (errno = 0, (d = readdir(dirp)) != NULL) { // this call _getdirentries()
+	*   while (errno = 0, (d = readdir(dirp)) != NULL) { // call _getdirentries()
 	*     if (select != NULL && !SELECT(d)) continue; // select is trash if (('.') || ('?.')) + excludes_list
 	*
 	*     p = (dirent *)malloc(_GENERIC_DIRSIZ(d)); // p by d
@@ -1337,13 +1234,6 @@ fdscandir(const std::wstring& in_str, struct dirent*** namelist,
 	*   return (-1);
 	* }
 	*
-	* fdclosedir() {
-	*   free((void*)dirp->dd_buf);
-	*   free(dirp->dd_compat_de);
-	*   _reclaim_telldir(dirp);
-	*   free((void*)dirp);
-	* }
-	*
 	* return res;
 	* }
 	*/
@@ -1358,11 +1248,14 @@ fdscandir(const std::wstring& in_str, struct dirent*** namelist,
 
 	// or https://learn.microsoft.com/en-us/windows/win32/fileio/listing-the-files-in-a-directory
 	for (auto it{std::filesystem::directory_iterator(l_path)}; it != std::filesystem::directory_iterator(); ++it) {
+		// missing: fnmatch():redefined:err.h !SELECT(d) --> !SELECT(scandir_d: only dp->d_name) // selectfile() diffdir.cpp // !
+
 		scandir_path = it->path(); // fqp
 
-		//scandir_psize = _GENERIC_DIRSIZ(&scandir_d); // err, scandir_d empty
+		//scandir_psize = _GENERIC_DIRSIZ(&scandir_d);
 		scandir_str = wstring2string(it->path().filename().c_str());
 		scandir_psize = _GENERIC_DIRLEN(scandir_str.length());
+
 		//wprintf(L"\"%s\", \"%s\", %zd\n", it->path().filename().c_str(), scandir_path.c_str(), scandir_psize);
 		//scandir_p = (dirent*)malloc(_GENERIC_DIRSIZ(&scandir_d));
 		scandir_p = (dirent*)malloc(scandir_psize);
@@ -1424,7 +1317,7 @@ fdscandir(const std::wstring& in_str, struct dirent*** namelist,
 	}
 
 	if (scandir_numitems > 0 && dcomp != NULL) {
-		qsort_r(names, scandir_numitems, sizeof(struct dirent*), select, dcomp); // !
+		qsort_r(names, scandir_numitems, sizeof(struct dirent*), select, dcomp);
 	}
 	//goto scandir_fail;
 
