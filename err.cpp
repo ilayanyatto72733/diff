@@ -233,6 +233,34 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
+ * Copyright (c) 2009 David Schultz <das@FreeBSD.org>
+ * Copyright (c) 2021 Dell EMC
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
 
 
 #include <SDKDDKVer.h>
@@ -242,6 +270,9 @@
 #include<vector>
 #include<string>
 #include<filesystem>
+#include <fstream>
+//#include <sstream>
+#include <iostream> // std::cin
 
 #include <fcntl.h>
 #include <wincrypt.h>
@@ -268,9 +299,33 @@
 //typedef	__off_t		off_t; /* file offset */      // sys/types.h
 
 // getdelim(), getline() {getdelim(..., '\n');}
-ssize_t getline(char** linep, size_t* linecapp, FILE* stream) { // read_excludes_file()
-return -1;
+size_t
+p2roundup(size_t n) {
+
+	if (!powerof2(n)) {
+		n--;
+		n |= n >> 1;
+		n |= n >> 2;
+		n |= n >> 4;
+		n |= n >> 8;
+		n |= n >> 16;
+//#if SIZE_T_MAX > 0xffffffffU
+#if SIZE_MAX > 0xffffffffU
+		n |= n >> 32;
+#endif
+		n++;
+	}
+	return (n);
 }
+
+/*ssize_t getline(char** linep, size_t* linecapp, FILE* stream) { // read_excludes_file()
+	return -1;
+
+	// HANDLE = _get_osfhandle(fd); // <io.h> // Never call CloseHandle on the return value of this function.
+	// fd = _open_osfhandle(HANDLE, _O_RDONLY); // _close() Don't call the Win32 function CloseHandle on the original handle.
+	// DuplicateHandle()
+	// FILE * // fd = fileno(FILE *stream);
+}//*/
 
 // return the total length of the string they tried to create. For strlcpy() that means the length of src.
 inline size_t _strlcpy(char* dst, const char* src, size_t dstsize) {
@@ -620,7 +675,7 @@ const cap_rights_t* cap_rights(struct filedesc* fdp, int fd) {
 
 
 
-bool can_libdiff(int flags) {
+bool can_libdiff(int flags) { // diffreg_new()
 	return false;
 }
 int		 diffreg_new(char*, char*, int, int) {
@@ -815,30 +870,8 @@ void qsort_r(void* base, size_t nmemb, size_t size,
 							int (*compar)(const struct dirent**, const struct dirent**)) {
 						   //void* thunk, int (*compar)(void*, const void*, const void*)) {
 
-	// thunk is selectf				is selectfile(const struct dirent *dp) { return 1; } // excludes_list
-	// compar is (dirent*, dirent*)	is alphasort(const struct dirent**, const struct dirent**)
-
-	//printf("qsort_r_0, items=%zd, sizeof(struct)=%zd\n", nmemb, size);
-
 	__qsort_r_compat(base, nmemb, size, thunk, compar);
-
-	// freebsd-src-main/lib/libc/stdlib/qsort.c
-	// qsort_r -> local_qsort_r
-	// #define local_qsort local_qsort_r
-	// __qsort_r_compat -> local_qsort_r_compat
-	// #define local_qsort local_qsort_r_compat
-	//+#define local_qsort local_qsort_s
 }
-
-// block_abi.h
-/*
-typedef DECLARE_BLOCK(int, qsort_block, const void*, const void*);
-void
-qsort_b(void* base, size_t nel, size_t width, qsort_block compar) {
-	__qsort_r_compat(base, nel, width, compar,
-					 (int (*)(void*, const void*, const void*))
-					 GET_BLOCK_FUNCTION(compar));
-}//*/
 
 
 /*
@@ -1169,7 +1202,7 @@ fdscandir(const std::wstring& in_str, struct dirent*** namelist,
 
 	//scandir_;
 	struct dirent* scandir_p = NULL, ** names = NULL, ** names2;
-	//struct dirent scandir_d = {NULL};
+	struct dirent scandir_d = {NULL};
 	size_t scandir_arraysz = 32, scandir_numitems = 0;
 	HANDLE scandir_fh = INVALID_HANDLE_VALUE;
 	std::filesystem::path scandir_path;
@@ -1177,6 +1210,7 @@ fdscandir(const std::wstring& in_str, struct dirent*** namelist,
 	std::wstring scandir_wstr;
 	size_t scandir_psize;
 
+	scandir_d.d_fileno = 1; // 0 to skip in selectfile()
 	std::filesystem::path l_path = in_str.c_str();
 	std::filesystem::directory_options::skip_permission_denied;
 	std::filesystem::perm_options::nofollow;
@@ -1248,13 +1282,17 @@ fdscandir(const std::wstring& in_str, struct dirent*** namelist,
 
 	// or https://learn.microsoft.com/en-us/windows/win32/fileio/listing-the-files-in-a-directory
 	for (auto it{std::filesystem::directory_iterator(l_path)}; it != std::filesystem::directory_iterator(); ++it) {
-		// missing: fnmatch():redefined:err.h !SELECT(d) --> !SELECT(scandir_d: only dp->d_name) // selectfile() diffdir.cpp // !
 
 		scandir_path = it->path(); // fqp
 
 		//scandir_psize = _GENERIC_DIRSIZ(&scandir_d);
 		scandir_str = wstring2string(it->path().filename().c_str());
 		scandir_psize = _GENERIC_DIRLEN(scandir_str.length());
+
+		memset(scandir_d.d_name, 0, ARRAYSIZE(scandir_d.d_name));
+		memcpy(scandir_d.d_name, scandir_str.data(), scandir_str.length());
+		if (!SELECT(&scandir_d))
+			continue;
 
 		//wprintf(L"\"%s\", \"%s\", %zd\n", it->path().filename().c_str(), scandir_path.c_str(), scandir_psize);
 		//scandir_p = (dirent*)malloc(_GENERIC_DIRSIZ(&scandir_d));
@@ -1290,7 +1328,7 @@ fdscandir(const std::wstring& in_str, struct dirent*** namelist,
 		} else {
 			scandir_p->d_type = DT_UNKNOWN;
 			//printf("\t\toth\n");
-		} // fs::is_symlink(s), !fs::exists(s) // !
+		} // fs::is_symlink(s), !fs::exists(s) // windows: Junction, symlink, hard link // !
 
 		//printf("cvt1: 0x%016zx, %d\n", il, scandir_p->d_reclen);
 		//scandir_p->d_reclen = sizeof(struct dirent); // d->d_reclen; // set in ufs_readdir() // !
@@ -1301,9 +1339,6 @@ fdscandir(const std::wstring& in_str, struct dirent*** namelist,
 		memcpy(scandir_p->d_name, scandir_str.data(), scandir_str.length());
 		//printf("volume_dev 0x%016zx, id 0x%016zx %016zx %zx\n", fi.VolumeSerialNumber, ih, il, i);
 		//printf("cvt2: 0x%016zx, %s, %s, %ld, %ld\n", scandir_p->d_fileno, scandir_str.c_str(), scandir_p->d_name, scandir_p->d_reclen, scandir_p->d_namlen);
-
-
-		//wprintf(L"%s ", it->path().c_str()); // no . ..
 
 		if (scandir_numitems >= scandir_arraysz) {
 			scandir_arraysz = scandir_arraysz * 2;
@@ -1324,7 +1359,7 @@ fdscandir(const std::wstring& in_str, struct dirent*** namelist,
 	//printf("ret dirp %zx, %zd\n", (uint64_t)names, scandir_numitems);
 	//*dirp = names;
 	*namelist = names;
-	//return (numitems); // !
+	//return (numitems);
 	//ret = static_cast<int>(scandir_numitems);
 	return (static_cast<int>(scandir_numitems));
 

@@ -74,5 +74,8 @@
     <ClCompile Include="regfree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="fnmatch_c.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

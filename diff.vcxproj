@@ -35,6 +35,7 @@
     <ClCompile Include="diffdir.cpp" />
     <ClCompile Include="diffreg.cpp" />
     <ClCompile Include="err.cpp" />
+    <ClCompile Include="fnmatch_c.cpp" />
     <ClCompile Include="getopt_long.cpp" />
     <ClCompile Include="regcomp.cpp" />
     <ClCompile Include="regerror.cpp" />

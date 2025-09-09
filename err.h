@@ -182,6 +182,77 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
+/*	$OpenBSD: fnmatch.h,v 1.8 2005/12/13 00:35:22 millert Exp $	*/
+/*	$NetBSD: fnmatch.h,v 1.5 1994/10/26 00:55:53 cgd Exp $	*/
+
+/*-
+ * Copyright (c) 1992, 1993
+ *	The Regents of the University of California.  All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 3. Neither the name of the University nor the names of its contributors
+ *    may be used to endorse or promote products derived from this software
+ *    without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ *
+ *	@(#)fnmatch.h	8.1 (Berkeley) 6/2/93
+ */
+/*-
+ * SPDX-License-Identifier: BSD-2-Clause
+ *
+ * Copyright 2018-2020 Alex Richardson <arichardson@FreeBSD.org>
+ *
+ * This software was developed by SRI International and the University of
+ * Cambridge Computer Laboratory (Department of Computer Science and
+ * Technology) under DARPA contract HR0011-18-C-0016 ("ECATS"), as part of the
+ * DARPA SSITH research programme.
+ *
+ * This software was developed by SRI International and the University of
+ * Cambridge Computer Laboratory under DARPA/AFRL contract (FA8750-10-C-0237)
+ * ("CTSRD"), as part of the DARPA CRASH research programme.
+ *
+ * This work was supported by Innovate UK project 105694, "Digital Security by
+ * Design (DSbD) Technology Platform Prototype".
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHOR AND CONTRIBUTORS ``AS IS'' AND
+ * ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED.  IN NO EVENT SHALL THE AUTHOR OR CONTRIBUTORS BE LIABLE
+ * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+ * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+ * OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+ * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+ * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+ * SUCH DAMAGE.
+ */
 
 #pragma once
 
@@ -242,6 +313,9 @@ typedef	long long	ssize_t; // sys/sys/_types.h
 )
 #define roundup(x, y) ((((x) + ((y) - 1)) / (y)) * (y))
 #endif
+#ifndef powerof2
+#define powerof2(x) ((((x)-1) & (x)) == 0)
+#endif
 
 #define _PATH_DEVNULL "nul" // "NUL" google AI Overview gonna open NUL file instead
 // _PATH_TMP
@@ -268,7 +342,8 @@ size_t strlcpy(char* dst, unsigned char* src, size_t dstsize);
 #define strcasecmp _stricmp
 #define strncasecmp _strnicmp
 // getdelim(), getline() {getdelim(..., '\n');}
-ssize_t getline(char** linep, size_t* linecapp, FILE* stream); // read_excludes_file()
+size_t p2roundup(size_t n);
+//ssize_t getline(char** linep, size_t* linecapp, FILE* stream); // read_excludes_file()
 // freebsd-src-main/lib/libc/amd64/string/strlcat.c
 size_t strlcat(char* dst, const char* src, size_t dstsize);
 // other freebsd-src-main/lib/libc/amd64/string/strsep.c
@@ -280,13 +355,30 @@ bool	 can_libdiff(int);
 
 //typedef	__int64_t	__off64_t; // sys/sys/_types.h
 //off64_t is _off_t https://stackoverflow.com/questions/9073667/where-to-find-the-complete-definition-of-off-t-type
+//off_t is int64 readdir() related, then in pred() off_t long
 //typedef	uint64_t	__uint64_t;
 //typedef	__uint64_t	__dev_t;
 //typedef	__dev_t		dev_t;
 //typedef	__uint64_t	__ino_t;	/* inode number */
 //typedef	__ino_t		ino_t;
 
-// sys/ufs/ufs/dir.h
+#define __BSD_VISIBLE 1
+
+#define	FNM_NOMATCH	1	/* Match failed. */
+#define	FNM_NOSYS	2	/* Function not supported (unused). */
+
+#define	FNM_NOESCAPE	0x01	/* Disable backslash escaping. */
+#define	FNM_PATHNAME	0x02	/* Slash must be matched by slash. */
+#define	FNM_PERIOD	0x04	/* Period must be matched by period. */
+#if __BSD_VISIBLE
+#define	FNM_LEADING_DIR	0x08	/* Ignore /<tail> after Imatch. */
+#define	FNM_CASEFOLD	0x10	/* Case insensitive search. */
+#define	FNM_IGNORECASE	FNM_CASEFOLD
+#define	FNM_FILE_NAME	FNM_PATHNAME
+#endif
+
+int	 fnmatch(const char*, const char*, int);
+//#define fnmatch(pattern, string, flags) (FNM_NOMATCH)
 
 #define	DIRBLKSIZ	1024	// dirent.h
 //#define DEV_BSHIFT 9 // tied to load avgs // sys/param.h
@@ -424,20 +516,16 @@ static inline char* med3(char*, char*, char*, cmp_t*, void*);
 
 int	 alphasort(const struct dirent**, const struct dirent**);
 
-//#define fnmatch(const char* pattern, const char* string, int flags) {return 0;}
-#define	FNM_NOMATCH	1	/* Match failed. */
-#define fnmatch(pattern, string, flags) (FNM_NOMATCH)
 //#define fdscandir(fd, dirp, selectf, comparf) -1
 //#define fdscandir(fd, dirp, selectf, comparf) 0
 int fdscandir(const std::wstring&, struct dirent***, int (*)(const struct dirent*), int (*)(const struct dirent**, const struct dirent**));
 //int fdscandir(int, struct dirent***, int (*)(const struct dirent*), int (*)(const struct dirent**, const struct dirent**));
-//int fnmatch(const char* pattern, const char* string, int flags) {}
 
 //#define	likely(x) __predict_true(x)
 //#define	unlikely(x) __predict_false(x)
 #define __predict_false(arg) (arg)
 inline void qsort_r(void* base, size_t nmemb, size_t size,
-						   void* thunk, int (*compar)(const struct dirent**, const struct dirent**));
+							void* thunk, int (*compar)(const struct dirent**, const struct dirent**));
 						   //void* thunk, int (*compar)(void*, const void*, const void*));
 
 std::string wstring2string(const std::wstring& in_str);
