@@ -621,7 +621,7 @@ diffit(struct dirent *dp, char *path1, size_t plen1, struct dirent *dp2,
 	else // always else or else when not crash, combined with perfect if() above
 		strlcpy(path2 + plen2, dp->d_name, PATH_MAX - plen2);
 
-	// strcasecmp(dp2->d_name, dp2->d_name) compare nothing == 0 ---> if ((ignore_file_case && 0) == 0) ---> if (ignore_file_case) ??? ((false && false) == 0) === !(false && false)
+	// strcasecmp(dp2->d_name, dp2->d_name) compares self == 0, if (ignore_file_case && eq) eq names eq anyway can copy both, if (false && whatever) never whatever
 	// now if case ignored there no strcmp(dp2->d_name, dp2->d_name)
 	// https://github.com/freebsd/freebsd-src/commit/3931c072c63d5a51d83157009e7f7510e08da80c#r164580724
 
